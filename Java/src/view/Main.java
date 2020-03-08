@@ -2,6 +2,8 @@ package view;
 import business.control.UserControl;
 import business.control.LoginException;
 import business.control.PassException;
+import business.model.User;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -11,6 +13,8 @@ public class Main {
     }
     
     public static void menu(){
+        User usuario = new User();
+        ArrayList<User> userList = new ArrayList();
         String login, pass;
         Scanner scan = new Scanner(System.in);
         UserControl usercontrol = new UserControl();
@@ -32,8 +36,9 @@ public class Main {
                 pass = scan.nextLine();
                 
                 try{
-                    usercontrol.add(login, pass);
-                    break;
+                    usuario.User(login, pass);
+                    usercontrol.add(usuario);
+                    System.out.println("O usuário foi adicionado com sucesso!");
                 } catch (LoginException e){
                     System.out.println(e.getMessage());
                 } catch (PassException e){
@@ -51,6 +56,19 @@ public class Main {
                 } catch (LoginException e){
                     System.out.println(e.getMessage());
                 }
+                menu();
+                break;
+            case 3:
+                User user;
+                System.out.println("Digite qual login deseja buscar:");
+                login = scan.nextLine();  
+                user = usercontrol.list(login);
+                System.out.println(user);
+                menu();
+                break;
+            case 4: 
+                userList = usercontrol.listAll();
+                System.out.println(userList);
                 menu();
                 break;
             default:
