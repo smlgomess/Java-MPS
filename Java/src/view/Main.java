@@ -23,7 +23,8 @@ public class Main {
             + "\nDigite 1 para adicionar"
             + "\nDigite 2 para deletar"
             + "\nDigite 3 para listar especifico"
-            + "\nDigite 4 para listar todos");
+            + "\nDigite 4 para listar todos"
+            + "\nDigite 5 para sair");
         int selec = scan.nextInt();
         scan.nextLine();
             
@@ -71,6 +72,8 @@ public class Main {
                 System.out.println(userList);
                 menu();
                 break;
+            case 5:
+                System.exit(0);
             default:
                 System.out.println("Comando inválido.");
                 menu();

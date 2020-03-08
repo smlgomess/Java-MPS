@@ -10,14 +10,13 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.Map;
 
 public class UserData {
     
     public void salvarDados(HashMap<String, User> users) {
-        File f = new File("DadosUsuario.bin");
+        File file = new File("DadosUsuario.bin");
         try{
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
             out.writeObject(users);
             out.close();
         } catch(FileNotFoundException e) {
