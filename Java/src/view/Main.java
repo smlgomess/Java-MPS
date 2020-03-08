@@ -1,10 +1,12 @@
 package view;
+
+import business.control.BuscaException;
 import business.control.UserControl;
 import business.control.LoginException;
 import business.control.PassException;
 import business.model.User;
 import java.util.ArrayList;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Main {
 
@@ -14,68 +16,82 @@ public class Main {
     
     public static void menu(){
         User usuario = new User();
-        ArrayList<User> userList = new ArrayList();
+        ArrayList<User> userList;
         String login, pass;
-        Scanner scan = new Scanner(System.in);
         UserControl usercontrol = new UserControl();
         
-        System.out.println("\t\tMenu"
-            + "\nDigite 1 para adicionar"
-            + "\nDigite 2 para deletar"
-            + "\nDigite 3 para listar especifico"
-            + "\nDigite 4 para listar todos"
-            + "\nDigite 5 para sair");
-        int selec = scan.nextInt();
-        scan.nextLine();
-            
-        switch(selec){
+        String option = JOptionPane.showInputDialog("Menu"
+                                                    + "\nDigite 1 para adicionar"
+                                                    + "\nDigite 2 para deletar"
+                                                    + "\nDigite 3 para listar especifico"
+                                                    + "\nDigite 4 para listar todos"
+                                                    + "\nDigite 5 para sair", "Sua opção");
+        if(option == null){
+            System.exit(0);
+        }
+        int op = Integer.parseInt(option);    
+        switch(op){
             case 1:
-                System.out.println("Digite seu login:");
-                login = scan.nextLine();                    
-                    
-                System.out.println("Digite a senha:");
-                pass = scan.nextLine();
+                login = JOptionPane.showInputDialog("Digite seu login:");                  
+                if(login == null){
+                    menu();
+                }    
+                
+                pass = JOptionPane.showInputDialog("Digite sua senha:");
+                if(pass == null){
+                    menu();
+                }
                 
                 try{
                     usuario.User(login, pass);
                     usercontrol.add(usuario);
                     System.out.println("O usuário foi adicionado com sucesso!");
-                } catch (LoginException e){
-                    System.out.println(e.getMessage());
-                } catch (PassException e){
-                    System.out.println(e.getMessage());
+                } catch (LoginException | PassException e){
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
                 menu();
                 break;
             case 2:
-                System.out.println("Digite seu login:");
-                login = scan.nextLine();
+                login = JOptionPane.showInputDialog("Digite o login para deletar:");                  
+                if(login == null){
+                    menu();
+                }
 
                 try{
                     usercontrol.del(login);
-                    System.out.println("O usuário foi removido com sucesso.");
+                    JOptionPane.showMessageDialog(null, "O usuário foi removido com sucesso.");
                 } catch (LoginException e){
-                    System.out.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
                 menu();
                 break;
             case 3:
                 User user;
-                System.out.println("Digite qual login deseja buscar:");
-                login = scan.nextLine();  
-                user = usercontrol.list(login);
-                System.out.println(user);
+                login = JOptionPane.showInputDialog("Digite o login para buscar:");                  
+                if(login == null){
+                    menu();
+                }
+                try{
+                    user = usercontrol.list(login);
+                    JOptionPane.showMessageDialog(null, user);
+                }catch(BuscaException e){
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
                 menu();
                 break;
-            case 4: 
-                userList = usercontrol.listAll();
-                System.out.println(userList);
+            case 4:
+                try{
+                    userList = usercontrol.listAll();
+                    JOptionPane.showMessageDialog(null, userList);
+                } catch(BuscaException e){
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
                 menu();
                 break;
             case 5:
                 System.exit(0);
             default:
-                System.out.println("Comando inválido.");
+                JOptionPane.showMessageDialog(null, "Comando inválido.");
                 menu();
                 break;
         }

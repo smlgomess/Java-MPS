@@ -58,11 +58,20 @@ public class UserControl{
         }        
     }
     
-    public ArrayList<User> listAll(){
-        return new ArrayList<>(this.login.values());
+    public ArrayList<User> listAll() throws BuscaException{
+        ArrayList lista = new ArrayList<>(this.login.values());
+        if(lista == null || lista.isEmpty()){
+            throw new BuscaException("Ocorreu um erro ao consultar a base de dados."
+                    + "\nContate um administrador ou tente novamente mais tarde.");
+        }
+        return lista;
     }
     
-    public User list(String login){        
-        return this.login.get(login);
+    public User list(String login) throws BuscaException{
+        User user = this.login.get(login);
+        if(user == null){
+            throw new BuscaException("O usuário não existe ou o nome especificado está errado.");
+        }
+        return user;
     }
 }

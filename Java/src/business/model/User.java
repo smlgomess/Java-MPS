@@ -31,6 +31,7 @@ public class User implements Serializable{
 
     @Override
     public String toString(){
-        return login + "\n" + pass;
+        return  "\n" +  login + "  " 
+                + pass;
     }
 }
