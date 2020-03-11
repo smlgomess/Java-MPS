@@ -1,9 +1,10 @@
 package view;
 
 import business.control.BuscaException;
-import business.control.UserControl;
+import business.control.MenuController;
 import business.control.LoginException;
 import business.control.PassException;
+import business.control.UserControl;
 import business.model.User;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ public class Main {
         User usuario = new User();
         ArrayList<User> userList;
         String login, pass;
-        UserControl usercontrol = new UserControl();
+        MenuController menuControl = new UserControl();
         
         String option = JOptionPane.showInputDialog("Menu"
                                                     + "\nDigite 1 para adicionar"
@@ -29,7 +30,9 @@ public class Main {
         if(option == null){
             System.exit(0);
         }
-        int op = Integer.parseInt(option);    
+
+        int op = Integer.parseInt(option); 
+          
         switch(op){
             case 1:
                 login = JOptionPane.showInputDialog("Digite seu login:");                  
@@ -43,8 +46,8 @@ public class Main {
                 }
                 
                 try{
-                    usuario.User(login, pass);
-                    usercontrol.add(usuario);
+                    usuario.UserConstruct(login, pass);
+                    menuControl.add(usuario);
                     System.out.println("O usuário foi adicionado com sucesso!");
                 } catch (LoginException | PassException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
@@ -58,7 +61,7 @@ public class Main {
                 }
 
                 try{
-                    usercontrol.del(login);
+                    menuControl.del(login);
                     JOptionPane.showMessageDialog(null, "O usuário foi removido com sucesso.");
                 } catch (BuscaException | LoginException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
@@ -72,7 +75,7 @@ public class Main {
                     menu();
                 }
                 try{
-                    user = usercontrol.list(login);
+                    user = menuControl.list(login);
                     JOptionPane.showMessageDialog(null, user);
                 }catch(BuscaException | LoginException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
@@ -81,7 +84,7 @@ public class Main {
                 break;
             case 4:
                 try{
-                    userList = usercontrol.listAll();
+                    userList = menuControl.listAll();
                     JOptionPane.showMessageDialog(null, userList);
                 } catch(BuscaException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());

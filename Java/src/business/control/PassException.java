@@ -2,7 +2,10 @@ package business.control;
 
 public class PassException extends Exception{
 
-    public PassException(){}
+    private static final long serialVersionUID = 1L;
+
+    public PassException() {
+    }
 
     public PassException(String message){
         super(message);

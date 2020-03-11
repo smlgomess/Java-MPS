@@ -26,6 +26,7 @@ public class UserData {
         }
     }
     
+    @SuppressWarnings("unchecked")
     public HashMap<String, User> carregarDados() throws InfraException {
         HashMap<String, User> users = new HashMap<>();
         File file = new File("DadosUsuario.bin");

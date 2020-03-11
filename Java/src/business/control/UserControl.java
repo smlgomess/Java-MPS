@@ -6,7 +6,7 @@ import infra.UserData;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserControl{
+public class UserControl implements MenuController {
     private HashMap<String, User> login;
     UserData arq;
     
@@ -21,18 +21,16 @@ public class UserControl{
         }
     }
     
-    public boolean add(User user) throws LoginException, PassException{
+    public void add(User user) throws LoginException, PassException{
         
         validarLogin(user.getLogin());
         validarPass(user.getPass());
 
         login.put(user.getLogin(), user);
-        arq.salvarDados(login);
-        
-        return true;     
+        arq.salvarDados(login);    
     }
     
-    public boolean del(String login) throws LoginException, BuscaException{
+    public void del(String login) throws LoginException, BuscaException{
         User user;
         validarLogin(login);
 
@@ -40,13 +38,12 @@ public class UserControl{
         
         validarBusca(user);
 
-        arq.salvarDados(this.login);
-
-        return true;      
+        arq.salvarDados(this.login);    
     }
     
     public ArrayList<User> listAll() throws BuscaException{
-        ArrayList lista = new ArrayList<>(this.login.values());
+        
+        ArrayList<User> lista = new ArrayList<>(this.login.values());
         
         validarBusca(lista);
 
