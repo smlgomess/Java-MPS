@@ -25,7 +25,7 @@ public class Main {
                                                     + "\nDigite 2 para deletar"
                                                     + "\nDigite 3 para listar especifico"
                                                     + "\nDigite 4 para listar todos"
-                                                    + "\nDigite 5 para sair", "Sua opção");
+                                                    + "\nDigite 5 para sair", "Digite sua opção");
         if(option == null){
             System.exit(0);
         }
@@ -60,7 +60,7 @@ public class Main {
                 try{
                     usercontrol.del(login);
                     JOptionPane.showMessageDialog(null, "O usuário foi removido com sucesso.");
-                } catch (LoginException e){
+                } catch (BuscaException | LoginException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
                 menu();
@@ -74,7 +74,7 @@ public class Main {
                 try{
                     user = usercontrol.list(login);
                     JOptionPane.showMessageDialog(null, user);
-                }catch(BuscaException e){
+                }catch(BuscaException | LoginException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
                 menu();
