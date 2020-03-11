@@ -32,7 +32,7 @@ public class User implements Serializable{
 
     @Override
     public String toString(){
-        return  "\n" +  login + "  " 
-                + pass;
+        return  "\nLogin: " + login+ 
+                "  Senha: " + pass;
     }
 }

@@ -3,12 +3,13 @@ package business.control;
 import business.model.User;
 import infra.InfraException;
 import infra.UserData;
+import infra.DataPersistent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserControl implements MenuController {
     private HashMap<String, User> login;
-    UserData arq;
+    DataPersistent arq = new UserData();
     
     public UserControl(){
         arq = new UserData();
@@ -21,7 +22,7 @@ public class UserControl implements MenuController {
         }
     }
     
-    public void add(User user) throws LoginException, PassException{
+    public void add(User user) throws LoginException, PassException, InfraException {
         
         validarLogin(user.getLogin());
         validarPass(user.getPass());
@@ -30,7 +31,7 @@ public class UserControl implements MenuController {
         arq.salvarDados(login);    
     }
     
-    public void del(String login) throws LoginException, BuscaException{
+    public void del(String login) throws LoginException, BuscaException, InfraException{
         User user;
         validarLogin(login);
 

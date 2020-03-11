@@ -6,6 +6,8 @@ import business.control.LoginException;
 import business.control.PassException;
 import business.control.UserControl;
 import business.model.User;
+import infra.InfraException;
+
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -49,7 +51,7 @@ public class Main {
                     usuario.UserConstruct(login, pass);
                     menuControl.add(usuario);
                     System.out.println("O usuário foi adicionado com sucesso!");
-                } catch (LoginException | PassException e){
+                } catch (InfraException | LoginException | PassException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
                 menu();
@@ -63,7 +65,7 @@ public class Main {
                 try{
                     menuControl.del(login);
                     JOptionPane.showMessageDialog(null, "O usuário foi removido com sucesso.");
-                } catch (BuscaException | LoginException e){
+                } catch (InfraException | BuscaException | LoginException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
                 menu();
@@ -77,7 +79,7 @@ public class Main {
                 try{
                     user = menuControl.list(login);
                     JOptionPane.showMessageDialog(null, user);
-                }catch(BuscaException | LoginException e){
+                }catch(BuscaException | LoginException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
                 menu();

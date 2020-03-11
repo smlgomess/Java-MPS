@@ -11,18 +11,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
-public class UserData {
+public class UserData implements DataPersistent{
     
-    public void salvarDados(HashMap<String, User> users) {
+    public void salvarDados(HashMap<String, User> users) throws InfraException{
         File file = new File("DadosUsuario.bin");
         try{
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
             out.writeObject(users);
             out.close();
         } catch(FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado.");
+            throw new InfraException("Arquivo não encontrado.");
         } catch (IOException e) {
-            System.out.println("Um erro foi encontrado ao salvar os dados. Contate o administrador ou tente mais tarde.");
+            throw new InfraException("Um erro foi encontrado ao salvar os dados." +
+                                     "\nContate o administrador ou tente mais tarde.");
         }
     }
     
