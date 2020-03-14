@@ -7,6 +7,7 @@ import business.control.PassException;
 import business.control.UserControl;
 import business.model.User;
 import infra.InfraException;
+import infra.PersistenceFacade;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ public class Main {
         ArrayList<User> userList;
         String login, pass;
         MenuController menuControl = new UserControl();
+        PersistenceFacade persistenceFacade = PersistenceFacade.obterInstance();
         
         String option = JOptionPane.showInputDialog("Menu"
                                                     + "\nDigite 1 para adicionar"
@@ -49,7 +51,7 @@ public class Main {
                 
                 try{
                     usuario.UserConstruct(login, pass);
-                    menuControl.add(usuario);
+                    persistenceFacade.cadastrar(usuario);
                     System.out.println("O usuário foi adicionado com sucesso!");
                 } catch (InfraException | LoginException | PassException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
@@ -63,7 +65,7 @@ public class Main {
                 }
 
                 try{
-                    menuControl.del(login);
+                    persistenceFacade.del(login);
                     JOptionPane.showMessageDialog(null, "O usuário foi removido com sucesso.");
                 } catch (InfraException | BuscaException | LoginException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
@@ -86,7 +88,7 @@ public class Main {
                 break;
             case 4:
                 try{
-                    userList = menuControl.listAll();
+                    userList = persistenceFacade.listarAll();
                     JOptionPane.showMessageDialog(null, userList);
                 } catch(BuscaException e){
                     JOptionPane.showMessageDialog(null, e.getMessage());
