@@ -10,16 +10,12 @@ public class Pedido implements Serializable{
     private String endereco_chegada; //endereço para onde o produto vai ser transportado
 
 
-    // public void UserConstruct(String login, String pass){
-    //     this.login = login;
-    //     this.pass = pass;
-    // }
-    
+       
     public void setEdpartida(String endereco_partida) { //endereço de partida
         this.endereco_partida = endereco_partida;
     }
 
-    public void setEdchegada(String endereco_chegada) {
+    public void setEdchegada(String endereco_chegada) {//endereço de "chegada", que é onde vai ser levado o produto
         this.endereco_chegada = endereco_chegada;
     }
 

@@ -6,7 +6,7 @@ import business.control.BuscaException;
 import business.control.LoginException;
 import business.control.MenuController;
 import business.control.PassException;
-import infra.factory.UserFactory;
+import infra.factory.infra_business_Factory;
 import business.model.User;
 
 public class PersistenceFacade{
@@ -14,7 +14,7 @@ public class PersistenceFacade{
     MenuController menuControl;
 
     private PersistenceFacade(){
-        UserFactory userFactory = new UserFactory();
+        infra_business_Factory userFactory = new infra_business_Factory();
         menuControl = userFactory.getUserControl();
     }
 
