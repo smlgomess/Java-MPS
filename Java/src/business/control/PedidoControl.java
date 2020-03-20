@@ -31,27 +31,15 @@ public class PedidoControl  implements Menu_Pedido_Controller {
 
     
     public Pedido list(String login) throws BuscaException, LoginException { 
-           
-        validarLogin(login);
-
+       
         Pedido pedido = pedidos.get(login);
         validarBusca(pedido);
-
+        
         return pedido;
         
     }
 
-    private void validarLogin(String login) throws LoginException{
-
-        if(login.length() > 20) {
-            throw new LoginException("O login não pode conter mais de 20 caracteres.");
-        } else if (login.matches(".*[0-9].*")) {
-            throw new LoginException("O login não pode conter números.");
-        } else if (login.length() == 0){
-            throw new LoginException("O login não pode ser vázio.");
-        }
-    }
-
+    
     private void validarBusca(Pedido pedido) throws BuscaException{
         if(pedido == null){
             throw new BuscaException("Nenhum pedido encontrado para o usuário.");

@@ -27,7 +27,7 @@ public class UserControl implements MenuController {
         validarLogin(user.getLogin());
         validarPass(user.getPass());
 
-        login.put(user.getLogin(), user);
+        login.put(user.getLogin(), user);        
         arq.salvarDados(login);    
     }
     
@@ -56,8 +56,7 @@ public class UserControl implements MenuController {
         validarLogin(login);
 
         User user = this.login.get(login);
-        validarBusca(user);
-
+        validarBusca(user);        
         return user;
     }
 

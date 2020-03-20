@@ -8,8 +8,12 @@ public class Pedido implements Serializable{
     private static final long serialVersionUID = 1L;
     private String endereco_partida; //endereço do qual o produto vai sair
     private String endereco_chegada; //endereço para onde o produto vai ser transportado
+    
 
-
+    public void setPedido(String endpartida, String endchegada){
+        setEdpartida(endpartida);
+        setEdchegada(endchegada);
+    }
        
     public void setEdpartida(String endereco_partida) { //endereço de partida
         this.endereco_partida = endereco_partida;
@@ -27,9 +31,9 @@ public class Pedido implements Serializable{
         return endereco_chegada;
     }
 
-    // @Override
-    // public String toString(){
-    //     return  "\nEndereco de partida: " + endereco_partida+ 
-    //             "  Endereco de chegada: " + endereco_chegada;
-    // }
+     @Override
+     public String toString(){
+         return  "\nEndereco de partida: " + endereco_partida+ 
+                 "  Endereco de chegada: " + endereco_chegada;
+     }
 }
