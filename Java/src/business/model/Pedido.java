@@ -34,6 +34,6 @@ public class Pedido implements Serializable{
      @Override
      public String toString(){
          return  "\nEndereco de partida: " + endereco_partida+ 
-                 "  Endereco de chegada: " + endereco_chegada;
+                 "\nEndereco de chegada: " + endereco_chegada;
      }
 }

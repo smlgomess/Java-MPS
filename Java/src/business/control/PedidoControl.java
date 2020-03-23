@@ -5,7 +5,6 @@ import business.model.User;
 import infra.InfraException;
 import infra.PedidoData;
 import infra.Pedido_Data_Persistent;
-//import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PedidoControl  implements Menu_Pedido_Controller {
@@ -24,7 +23,6 @@ public class PedidoControl  implements Menu_Pedido_Controller {
     }
 
     public void add(User user, Pedido pedido) throws InfraException {
-        
         pedidos.put(user.getLogin(), pedido);
         arq.salvarDados(pedidos);    
     }
