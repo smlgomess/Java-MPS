@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -15,10 +16,32 @@ import business.model.Pedido;
 import business.model.User;
 import infra.InfraException;
 import infra.PersistenceFacade;
+import infra.PedidoData;
 
 public class Menu {
 
-        public void menu(){
+        private int id;
+        public boolean firstimeExecution = true;
+        PedidoData data = new PedidoData(); 
+
+        public int getID(){
+            return id;
+        }
+
+        public void setID(int i){
+            this.id = i;
+        }
+
+
+        public void menu() throws InfraException {
+            //vai tentar obter id do último pedido. Se não tiver nenhum pedido feito, vai criar um arquivo com 0 nele, para o primeiro pedido ter id 1
+            //cada pedido feito incrementa o valor do ID em 1 e salva nesse arquivo para ser acessado quando o programa for re iniciado.
+            //só executa uma vez o trecho abaixo, que é quando o main chamar menu
+            if (firstimeExecution){
+                firstimeExecution = false;
+                setID(data.Obter_ID());
+            }
+
             User usuario = new User();
             User find_user;
             Pedido pedido = new Pedido();
@@ -111,7 +134,8 @@ public class Menu {
                         find_user = menuControl.list(login);                    
                         end_saida = JOptionPane.showInputDialog("Digite o endereço de saida do produto:"); 
                         end_chegada = JOptionPane.showInputDialog("Digite o endereço para qual o produto será enviado:"); 
-                        pedido.setPedido(end_saida, end_chegada);                    
+                        setID(getID()+1);
+                        pedido.setPedido(getID() ,end_saida, end_chegada);                    
                         persistenceFacade.cadastrar_Pedido(find_user, pedido);
                         System.out.println("O pedido foi feito com sucesso!");                    
                     }catch(BuscaException | LoginException | PassException | InfraException e) {
@@ -127,8 +151,8 @@ public class Menu {
                     }
                     try{
                         find_user = menuControl.list(login);
-                        pedido = pedidoController.list(login);
-                        JOptionPane.showMessageDialog(null, pedido);
+                        List<Pedido> lista_pedidos = pedidoController.list(login);
+                        JOptionPane.showMessageDialog(null, lista_pedidos);
                     }catch(BuscaException | LoginException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());
                     }

@@ -8,9 +8,13 @@ public class Pedido implements Serializable{
     private static final long serialVersionUID = 1L;
     private String endereco_partida; //endereço do qual o produto vai sair
     private String endereco_chegada; //endereço para onde o produto vai ser transportado
+    private int id; //id do pedido (unico para cada pedido feito)
+    private String estado; //o estado que se encontra o pedido, se está em aberto, andamento, cancelado ou concluido.
     
 
-    public void setPedido(String endpartida, String endchegada){
+    public void setPedido(int id, String endpartida, String endchegada){
+        setID(id);
+        setState("Em aberto");
         setEdpartida(endpartida);
         setEdchegada(endchegada);
     }
@@ -31,9 +35,28 @@ public class Pedido implements Serializable{
         return endereco_chegada;
     }
 
+    public void setID(int id){
+        this.id = id;
+
+    }
+
+    public int getID(){
+        return id;
+    }
+
+    public void setState(String state){
+        this.estado = state;
+    }
+
+    public String getState(){
+        return estado;
+    }
+
      @Override
      public String toString(){
-         return  "\nEndereco de partida: " + endereco_partida+ 
-                 "\nEndereco de chegada: " + endereco_chegada;
+         return  "\nID: " + id+ 
+                 "\nEndereco de partida: " + endereco_partida+   
+                 "\nEndereco de chegada: " + endereco_chegada+
+                 "\nEstado do pedido: " + estado;
      }
 }
