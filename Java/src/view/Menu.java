@@ -14,12 +14,15 @@ import business.control.PedidoControl;
 import business.control.UserControl;
 import business.model.Pedido;
 import business.model.User;
+import command.Caller;
+import command.Commands;
 import infra.InfraException;
 import infra.PersistenceFacade;
 import infra.PedidoData;
 
 public class Menu {
 
+        private static final String Registrar = null, Listar = null;
         private int id;
         public boolean firstimeExecution = true;
         PedidoData data = new PedidoData(); 
@@ -51,6 +54,7 @@ public class Menu {
             Menu_Pedido_Controller pedidoController = new PedidoControl();
 
             PersistenceFacade persistenceFacade = PersistenceFacade.obterInstance();
+            Caller call = new Caller(persistenceFacade);
             
             String option = JOptionPane.showInputDialog("Menu"
                                                         + "\nDigite 1 para adicionar usuário"
@@ -136,7 +140,7 @@ public class Menu {
                         end_chegada = JOptionPane.showInputDialog("Digite o endereço para qual o produto será enviado:"); 
                         setID(getID()+1);
                         pedido.setPedido(getID() ,end_saida, end_chegada);                    
-                        persistenceFacade.cadastrar_Pedido(find_user, pedido);
+                        call.service(Commands.REGISTRAR, find_user, pedido);
                         System.out.println("O pedido foi feito com sucesso!");                    
                     }catch(BuscaException | LoginException | PassException | InfraException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());
@@ -151,7 +155,7 @@ public class Menu {
                     }
                     try{
                         find_user = menuControl.list(login);
-                        List<Pedido> lista_pedidos = pedidoController.list(login);
+                        List<Pedido> lista_pedidos = call.service(Commands.LISTAR, find_user);
                         JOptionPane.showMessageDialog(null, lista_pedidos);
                     }catch(BuscaException | LoginException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());

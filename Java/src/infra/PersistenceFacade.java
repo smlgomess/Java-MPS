@@ -1,15 +1,16 @@
 package infra;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import business.model.User;
+import business.model.Pedido;
 import business.control.BuscaException;
 import business.control.LoginException;
 import business.control.MenuController;
 import business.control.Menu_Pedido_Controller;
 import business.control.PassException;
 import infra.factory.infra_business_Factory;
-import business.model.User;
-import business.model.Pedido;
 
 public class PersistenceFacade{
 
@@ -44,6 +45,13 @@ public class PersistenceFacade{
         delUser(login);
     }
 
+    public List<Pedido> listarPedido(User login) throws BuscaException, LoginException{
+        return listPedido(login);
+    }
+
+    private List<Pedido> listPedido(User login) throws BuscaException, LoginException {
+        return pedidoControl.list(login);
+    }
 
     private void addUser(User user) throws LoginException, PassException, InfraException {
         menuControl.add(user);

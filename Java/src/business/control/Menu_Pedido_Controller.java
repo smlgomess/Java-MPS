@@ -11,5 +11,5 @@ public interface Menu_Pedido_Controller {
 
     public void add(User user, Pedido pedido) throws InfraException;
 
-    public List<Pedido> list(String login) throws BuscaException, LoginException;
+    public List<Pedido> list(User login) throws BuscaException, LoginException;
 }

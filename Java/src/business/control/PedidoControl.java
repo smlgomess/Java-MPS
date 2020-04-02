@@ -11,8 +11,7 @@ import java.util.List;
 
 public class PedidoControl  implements Menu_Pedido_Controller {
     private HashMap<String, List<Pedido>> pedidos;
-    Pedido_Data_Persistent arq = new PedidoData();
-    
+    Pedido_Data_Persistent arq = new PedidoData();  
 
     public PedidoControl(){
         arq = new PedidoData();
@@ -35,23 +34,18 @@ public class PedidoControl  implements Menu_Pedido_Controller {
         arq.salvarID(pedido.getID());
         arq.salvarDados(pedidos);    
     }
-
     
-    public List<Pedido> list(String login) throws BuscaException, LoginException { 
+    public List<Pedido> list(User login) throws BuscaException, LoginException { 
        
-        List<Pedido> ped = pedidos.get(login);        
+        List<Pedido> ped = pedidos.get(login.getLogin());        
         validarBusca(ped);        
         return ped;
         
     }
-
     
     private void validarBusca(List<Pedido> pedido) throws BuscaException{
         if(pedido == null){
             throw new BuscaException("Nenhum pedido encontrado para o usuário.");
         }
     }
-
-
-
 }
