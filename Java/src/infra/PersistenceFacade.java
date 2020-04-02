@@ -14,12 +14,12 @@ import business.model.Pedido;
 public class PersistenceFacade{
 
     MenuController menuControl;
-    Menu_Pedido_Controller pedidoControl;
+    Menu_Pedido_Controller pedidoControl;    
 
     private PersistenceFacade(){
         infra_business_Factory userFactory = new infra_business_Factory();
         menuControl = userFactory.getUserControl();
-        pedidoControl = userFactory.getPedidoControl();
+        pedidoControl = userFactory.getPedidoControl();        
     }
 
     private static PersistenceFacade instance = new PersistenceFacade();
