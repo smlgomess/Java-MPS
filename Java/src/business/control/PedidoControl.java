@@ -1,13 +1,16 @@
 package business.control;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import business.control.exception.BuscaException;
+import business.control.exception.LoginException;
 import business.model.Pedido;
 import business.model.User;
 import infra.InfraException;
 import infra.PedidoData;
 import infra.Pedido_Data_Persistent;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class PedidoControl  implements Menu_Pedido_Controller {
     private HashMap<String, List<Pedido>> pedidos;
@@ -40,12 +43,23 @@ public class PedidoControl  implements Menu_Pedido_Controller {
         List<Pedido> ped = pedidos.get(login.getLogin());        
         validarBusca(ped);        
         return ped;
-        
     }
     
     private void validarBusca(List<Pedido> pedido) throws BuscaException{
         if(pedido == null){
             throw new BuscaException("Nenhum pedido encontrado para o usuário.");
         }
+    }
+
+    @Override
+    public void alter(User user, Pedido pedido) throws InfraException {
+        List<Pedido> ped = pedidos.get(user.getLogin());
+        if (ped == null){
+            ped = new ArrayList<>();
+        }
+        ped.add(pedido);
+        pedidos.replace(user.getLogin(), ped);
+        arq.salvarID(pedido.getID());
+        arq.salvarDados(pedidos);  
     }
 }

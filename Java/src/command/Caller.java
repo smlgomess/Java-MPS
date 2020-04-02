@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import business.control.BuscaException;
-import business.control.LoginException;
-import business.control.PassException;
+import business.control.exception.BuscaException;
+import business.control.exception.LoginException;
+import business.control.exception.PassException;
 import business.model.Pedido;
 import business.model.User;
 import infra.InfraException;
@@ -20,6 +20,7 @@ public class Caller {
         comandos = new HashMap<>();
         comandos.put(Commands.REGISTRAR, new PedidoRegistroCommand(persistence));
         comandos.put(Commands.LISTAR, new PedidoListarCommand(persistence));
+        comandos.put(Commands.ALTERAR, new PedidoAlterarCommand(persistence));
     }
 
     public List<Pedido> service(Commands cmd, User user) throws BuscaException, LoginException {

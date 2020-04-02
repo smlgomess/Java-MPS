@@ -1,4 +1,4 @@
-package business.control;
+package business.control.exception;
 
 public class BuscaException extends Exception{
     

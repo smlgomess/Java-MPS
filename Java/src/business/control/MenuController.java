@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import business.model.User;
 import infra.InfraException;
+import business.control.exception.BuscaException;
+import business.control.exception.LoginException;
+import business.control.exception.PassException;
 
 public interface MenuController {
 

@@ -6,6 +6,10 @@ import infra.MotoristaData;
 import infra.Data_Motorista_Persistent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import business.control.exception.BuscaException;
+import business.control.exception.CNHException;
+import business.control.exception.LoginException;
+import business.control.exception.PassException;
 
 public class MotoristaControl implements Menu_Motorista_Controller {
     private HashMap<String, Motorista> login;

@@ -2,11 +2,11 @@ package view;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import business.control.BuscaException;
-import business.control.LoginException;
-import business.control.CNHException;
+import business.control.exception.BuscaException;
+import business.control.exception.CNHException;
+import business.control.exception.LoginException;
+import business.control.exception.PassException;
 import business.control.Menu_Motorista_Controller;
-import business.control.PassException;
 import business.control.MotoristaControl;
 import business.model.Motorista;
 import infra.InfraException;

@@ -2,9 +2,9 @@ package command;
 
 import java.util.List;
 
-import business.control.BuscaException;
-import business.control.LoginException;
-import business.control.PassException;
+import business.control.exception.BuscaException;
+import business.control.exception.LoginException;
+import business.control.exception.PassException;
 import business.model.Pedido;
 import business.model.User;
 import infra.InfraException;

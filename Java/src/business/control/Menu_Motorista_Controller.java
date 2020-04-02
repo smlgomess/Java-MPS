@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import business.model.Motorista;
 import infra.InfraException;
+import business.control.exception.BuscaException;
+import business.control.exception.CNHException;
+import business.control.exception.LoginException;
+import business.control.exception.PassException;
 
 public interface Menu_Motorista_Controller {
 

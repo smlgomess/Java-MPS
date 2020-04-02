@@ -5,11 +5,11 @@ import java.util.List;
 
 import business.model.User;
 import business.model.Pedido;
-import business.control.BuscaException;
-import business.control.LoginException;
 import business.control.MenuController;
 import business.control.Menu_Pedido_Controller;
-import business.control.PassException;
+import business.control.exception.BuscaException;
+import business.control.exception.LoginException;
+import business.control.exception.PassException;
 import infra.factory.infra_business_Factory;
 
 public class PersistenceFacade{
@@ -49,6 +49,10 @@ public class PersistenceFacade{
         return listPedido(login);
     }
 
+    public void alterPedido(User login, Pedido pedido) throws InfraException {
+        altPedido(login, pedido);
+    }
+
     private List<Pedido> listPedido(User login) throws BuscaException, LoginException {
         return pedidoControl.list(login);
     }
@@ -67,6 +71,10 @@ public class PersistenceFacade{
 
     private void delUser(String login) throws LoginException, BuscaException, InfraException{
         menuControl.del(login);
+    }
+
+    private void altPedido(User login, Pedido pedido) throws InfraException {
+        pedidoControl.alter(login, pedido);
     }
 
 }

@@ -6,6 +6,9 @@ import infra.UserData;
 import infra.DataPersistent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import business.control.exception.BuscaException;
+import business.control.exception.LoginException;
+import business.control.exception.PassException;
 
 public class UserControl implements MenuController {
     private HashMap<String, User> login;

@@ -5,34 +5,36 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import business.control.BuscaException;
-import business.control.LoginException;
+import business.control.exception.BuscaException;
+import business.control.exception.LoginException;
+import business.control.exception.PassException;
 import business.control.MenuController;
 import business.control.Menu_Pedido_Controller;
-import business.control.PassException;
-import business.control.PedidoControl;
 import business.control.UserControl;
 import business.model.Pedido;
 import business.model.User;
 import infra.InfraException;
 import infra.PersistenceFacade;
 import infra.PedidoData;
+import command.Caller;
+import command.Commands;
 
 public class Menu_Cliente {
 
         private int id;
         public boolean firstimeExecution = true;        
-        public String login, pass, end_saida, end_chegada, option;
+        public String login, pass, end_saida, end_chegada, option, newEndSaida, newEndChegada;
         public int op;
 
         public PedidoData data = new PedidoData(); 
         public User usuario, find_user;       
-        public Pedido pedido;
+        public Pedido pedido = new Pedido();
         public ArrayList<User> userList;
         public List<Pedido> lista_pedidos;
-        public MenuController menuControl;
+        public MenuController menuControl = new UserControl();
         public Menu_Pedido_Controller pedidoController;      
         public PersistenceFacade persistenceFacade = PersistenceFacade.obterInstance();
+        public Caller call = new Caller(persistenceFacade);
 
         
         public int getID(){
@@ -52,7 +54,9 @@ public class Menu_Cliente {
                 firstimeExecution = false;
                 setID(data.Obter_ID());
             }
+
             
+
             option = JOptionPane.showInputDialog("Menu"
                                                         + "\nDigite 1 para adicionar usuário"
                                                         + "\nDigite 2 para deletar usuário"
@@ -60,7 +64,8 @@ public class Menu_Cliente {
                                                         + "\nDigite 4 para listar todos os usuários"
                                                         + "\nDigite 5 para realizar um pedido"
                                                         + "\nDigite 6 para listar os pedidos de um usuário"
-                                                        + "\nDigite 7 para sair", "Digite sua opção");
+                                                        + "\nDigite 7 para alterar o endereço do pedido"
+                                                        + "\nDigite 8 para sair", "Digite sua opção");
             if(option == null){
                 System.exit(0);
             }
@@ -109,8 +114,7 @@ public class Menu_Cliente {
                         }
                         menu();
                         break;
-                    case 3:  
-                        menuControl = new UserControl();                  
+                    case 3:                    
                         login = JOptionPane.showInputDialog("Digite o login para buscar:");                  
                         if(login == null){
                             menu();
@@ -132,9 +136,7 @@ public class Menu_Cliente {
                         }
                         menu();
                         break;
-                    case 5:  
-                        pedido = new Pedido(); 
-                        menuControl = new UserControl();                             
+                    case 5:                               
                         login = JOptionPane.showInputDialog("Digite seu login:");                  
                         if(login == null){
                             menu();
@@ -146,7 +148,7 @@ public class Menu_Cliente {
                             end_chegada = JOptionPane.showInputDialog("Digite o endereço para qual o produto será enviado:"); 
                             setID(getID()+1);
                             pedido.setPedido(getID() ,end_saida, end_chegada);                    
-                            persistenceFacade.cadastrar_Pedido(find_user, pedido);
+                            call.service(Commands.REGISTRAR, find_user, pedido);
                             System.out.println("O pedido foi feito com sucesso!");                    
                         }catch(BuscaException | LoginException | PassException | InfraException e) {
                             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -155,15 +157,14 @@ public class Menu_Cliente {
                         break;     
                         
                     case 6:  
-                        menuControl = new UserControl(); 
-                        pedidoController = new PedidoControl();             
-                        login = JOptionPane.showInputDialog("Digite o login para verficiar se existem pedidos feitos:");                  
+                        menuControl = new UserControl();          
+                        login = JOptionPane.showInputDialog("Digite o login para verificar se existem pedidos feitos:");                  
                         if(login == null){
                             menu();
                         }
                         try{
                             find_user = menuControl.list(login);
-                            lista_pedidos = pedidoController.list(login);
+                            lista_pedidos = call.service(Commands.LISTAR, find_user);
                             JOptionPane.showMessageDialog(null, lista_pedidos);
                         }catch(BuscaException | LoginException e) {
                             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -172,6 +173,26 @@ public class Menu_Cliente {
                         break;
                         
                     case 7:
+                        login = JOptionPane.showInputDialog("Digite seu login:");                  
+                        if(login == null){
+                            menu();
+                        }  
+                                        
+                        try{                        
+                            find_user = menuControl.list(login);      
+                            newEndSaida = JOptionPane.showInputDialog("Digite o novo endereço de saida do produto:"); 
+                            newEndChegada = JOptionPane.showInputDialog("Digite o novo endereço para qual o produto será enviado:"); 
+                            setID(getID() + 1);
+                            pedido.setPedido(getID(), newEndSaida, newEndChegada);                    
+                            call.service(Commands.ALTERAR, find_user, pedido);
+                            System.out.println("Pedido alterado com sucesso!");  
+                        } catch(BuscaException | InfraException | PassException | LoginException e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                        }
+                        menu();
+                        break;
+
+                    case 8:
                         System.exit(0);    
                     default:
                         JOptionPane.showMessageDialog(null, "Comando inválido.");
