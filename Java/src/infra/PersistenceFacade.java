@@ -49,7 +49,7 @@ public class PersistenceFacade{
         return listPedido(login);
     }
 
-    public void alterPedido(User login, Pedido pedido) throws InfraException {
+    public void alterPedido(User login, Pedido pedido) throws InfraException, BuscaException, LoginException {
         altPedido(login, pedido);
     }
 
@@ -73,7 +73,7 @@ public class PersistenceFacade{
         menuControl.del(login);
     }
 
-    private void altPedido(User login, Pedido pedido) throws InfraException {
+    private void altPedido(User login, Pedido pedido) throws InfraException, BuscaException, LoginException {
         pedidoControl.alter(login, pedido);
     }
 

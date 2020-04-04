@@ -15,5 +15,5 @@ public interface Command {
 
     public List<Pedido> exec(User string) throws BuscaException, LoginException;
 
-    public void exec(User user, Pedido pedido) throws InfraException, LoginException, PassException;
+    public void exec(User user, Pedido pedido) throws InfraException, LoginException, PassException, BuscaException;
 }

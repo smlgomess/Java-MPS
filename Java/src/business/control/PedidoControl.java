@@ -52,11 +52,17 @@ public class PedidoControl  implements Menu_Pedido_Controller {
     }
 
     @Override
-    public void alter(User user, Pedido pedido) throws InfraException {
+    public void alter(User user, Pedido pedido) throws InfraException, BuscaException, LoginException {
         List<Pedido> ped = pedidos.get(user.getLogin());
+        Pedido last;
         if (ped == null){
             ped = new ArrayList<>();
         }
+
+        last = ped.remove(ped.size() - 1);
+        last.setState("Alterado");
+        ped.add(ped.size(), last);
+
         ped.add(pedido);
         pedidos.replace(user.getLogin(), ped);
         arq.salvarID(pedido.getID());

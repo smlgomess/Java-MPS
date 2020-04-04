@@ -25,7 +25,7 @@ public class PedidoAlterarCommand implements Command {
     public List<Pedido> exec(User string) throws BuscaException, LoginException { return null; }
 
     @Override
-    public void exec(User user, Pedido pedido) throws InfraException, LoginException, PassException {
+    public void exec(User user, Pedido pedido) throws InfraException, LoginException, PassException, BuscaException {
         facade.alterPedido(user, pedido);
     }
 }

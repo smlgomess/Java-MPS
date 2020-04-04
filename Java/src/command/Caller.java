@@ -28,7 +28,8 @@ public class Caller {
         return command.exec(user);
     }
 
-    public void service(Commands cmd, User user, Pedido pedido) throws InfraException, LoginException, PassException {
+    public void service(Commands cmd, User user, Pedido pedido) throws InfraException, LoginException, PassException,
+            BuscaException {
         Command command = comandos.get(cmd);
         command.exec(user, pedido);
     }

@@ -147,7 +147,7 @@ public class Menu_Cliente {
                             end_saida = JOptionPane.showInputDialog("Digite o endereço de saida do produto:"); 
                             end_chegada = JOptionPane.showInputDialog("Digite o endereço para qual o produto será enviado:"); 
                             setID(getID()+1);
-                            pedido.setPedido(getID() ,end_saida, end_chegada);                    
+                            pedido.setPedido(getID(), "Em aberto", end_saida, end_chegada);                    
                             call.service(Commands.REGISTRAR, find_user, pedido);
                             System.out.println("O pedido foi feito com sucesso!");                    
                         }catch(BuscaException | LoginException | PassException | InfraException e) {
@@ -183,7 +183,7 @@ public class Menu_Cliente {
                             newEndSaida = JOptionPane.showInputDialog("Digite o novo endereço de saida do produto:"); 
                             newEndChegada = JOptionPane.showInputDialog("Digite o novo endereço para qual o produto será enviado:"); 
                             setID(getID() + 1);
-                            pedido.setPedido(getID(), newEndSaida, newEndChegada);                    
+                            pedido.setPedido(getID(), "Em aberto",newEndSaida, newEndChegada);                   
                             call.service(Commands.ALTERAR, find_user, pedido);
                             System.out.println("Pedido alterado com sucesso!");  
                         } catch(BuscaException | InfraException | PassException | LoginException e) {

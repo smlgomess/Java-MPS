@@ -12,9 +12,9 @@ public class Pedido implements Serializable{
     private String estado; //o estado que se encontra o pedido, se está em aberto, andamento, cancelado ou concluido.
     
 
-    public void setPedido(int id, String endpartida, String endchegada){
+    public void setPedido(int id, String state, String endpartida, String endchegada){
         setID(id);
-        setState("Em aberto");
+        setState(state);
         setEdpartida(endpartida);
         setEdchegada(endchegada);
     }
