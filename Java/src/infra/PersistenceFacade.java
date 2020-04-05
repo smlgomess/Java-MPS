@@ -37,6 +37,10 @@ public class PersistenceFacade{
         addPedido(user, pedido);
     }
 
+    public void removePedido(User user, Pedido pedido) throws InfraException {
+        remPedido(user, pedido);
+    }
+
     public ArrayList<User> listarAll() throws BuscaException{
         return listAll();
     }
@@ -51,6 +55,10 @@ public class PersistenceFacade{
 
     public void alterPedido(User login, Pedido pedido) throws InfraException, BuscaException, LoginException {
         altPedido(login, pedido);
+    }
+
+    private void remPedido(User user, Pedido pedido) throws InfraException {
+        pedidoControl.remove(user, pedido);
     }
 
     private List<Pedido> listPedido(User login) throws BuscaException, LoginException {

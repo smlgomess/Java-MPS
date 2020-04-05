@@ -1,22 +1,37 @@
 package business.model;
 
+import memento.CareTaker;
+import memento.MementoState;
+import memento.PedidoMemento;
+
 import java.io.Serializable;
 
 
-public class Pedido implements Serializable{
+public class Pedido implements Serializable, MementoState<Pedido> {
     
     private static final long serialVersionUID = 1L;
+    private CareTaker caretaker;
     private String endereco_partida; //endereço do qual o produto vai sair
     private String endereco_chegada; //endereço para onde o produto vai ser transportado
     private int id; //id do pedido (unico para cada pedido feito)
     private String estado; //o estado que se encontra o pedido, se está em aberto, andamento, cancelado ou concluido.
     
+    public Pedido(){}
+
+    public Pedido(int id, String state, String endpartida, String endchegada){
+        this.setID(id);
+        this.setState(state);
+        this.setEdpartida(endpartida);
+        this.setEdchegada(endchegada);
+        
+    }
 
     public void setPedido(int id, String state, String endpartida, String endchegada){
-        setID(id);
-        setState(state);
-        setEdpartida(endpartida);
-        setEdchegada(endchegada);
+        this.setID(id);
+        this.setState(state);
+        this.setEdpartida(endpartida);
+        this.setEdchegada(endchegada);
+        caretaker = new CareTaker();
     }
        
     public void setEdpartida(String endereco_partida) { //endereço de partida
@@ -50,6 +65,14 @@ public class Pedido implements Serializable{
 
     public String getState(){
         return estado;
+    }
+
+    public void saveEstado() {
+        caretaker.add( new PedidoMemento(this) );
+    }
+
+    public Pedido getLastPedido() {
+        return (Pedido) caretaker.getLast().getState();
     }
 
      @Override

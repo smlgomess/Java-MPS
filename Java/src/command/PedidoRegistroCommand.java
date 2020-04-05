@@ -1,6 +1,7 @@
 package command;
 
 import infra.PersistenceFacade;
+import memento.MementoState;
 import infra.InfraException;
 
 import java.util.List;
@@ -18,13 +19,16 @@ public class PedidoRegistroCommand implements Command {
         this.facade = facade;
     }
 
-    public void exec(User user, Pedido pedido) throws InfraException, LoginException, PassException {    
+    public void exec(User user, Pedido pedido) throws InfraException, LoginException, PassException {
         facade.cadastrar_Pedido(user, pedido);
     }
 
     @Override
-    public void exec() {}
+    public void exec() {
+    }
 
     @Override
-    public List<Pedido> exec(User login) { return null; }
+    public List<Pedido> exec(User login) {
+        return null;
+    }
 }

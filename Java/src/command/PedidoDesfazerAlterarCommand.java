@@ -11,11 +11,11 @@ import infra.InfraException;
 import infra.PersistenceFacade;
 import memento.MementoState;
 
-public class PedidoAlterarCommand implements Command {
+public class PedidoDesfazerAlterarCommand implements Command {
 
     private PersistenceFacade facade;
 
-    public PedidoAlterarCommand(PersistenceFacade facade) {
+    public PedidoDesfazerAlterarCommand(PersistenceFacade facade) {
         this.facade = facade;
     }
 
@@ -29,7 +29,10 @@ public class PedidoAlterarCommand implements Command {
     }
 
     @Override
-    public void exec(User user, Pedido pedido) throws InfraException, LoginException, PassException, BuscaException {
-        facade.alterPedido(user, pedido);
+    public void exec(User user, Pedido pedido) throws InfraException, LoginException, PassException {
+        Object estado = ((MementoState) pedido.getLastPedido());
+        if(estado != null) {
+            facade.removePedido(user, pedido);
+        }
     }
 }

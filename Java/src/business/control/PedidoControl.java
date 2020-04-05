@@ -68,4 +68,17 @@ public class PedidoControl  implements Menu_Pedido_Controller {
         arq.salvarID(pedido.getID());
         arq.salvarDados(pedidos);  
     }
+
+    @Override
+    public void remove(User user, Pedido pedido) throws InfraException {
+        List<Pedido> ped = pedidos.get(user.getLogin());
+        if (ped == null){
+            ped = new ArrayList<>();
+        }
+
+        ped.remove(ped.size() - 1);
+        pedidos.replace(user.getLogin(), ped);
+        arq.salvarID(pedido.getID());
+        arq.salvarDados(pedidos);
+    }
 }

@@ -11,6 +11,7 @@ import business.model.Pedido;
 import business.model.User;
 import infra.InfraException;
 import infra.PersistenceFacade;
+import memento.MementoState;
 
 public class Caller {
 
@@ -21,6 +22,7 @@ public class Caller {
         comandos.put(Commands.REGISTRAR, new PedidoRegistroCommand(persistence));
         comandos.put(Commands.LISTAR, new PedidoListarCommand(persistence));
         comandos.put(Commands.ALTERAR, new PedidoAlterarCommand(persistence));
+        comandos.put(Commands.DESFAZER_ALTERAR, new PedidoDesfazerAlterarCommand(persistence));
     }
 
     public List<Pedido> service(Commands cmd, User user) throws BuscaException, LoginException {
@@ -33,4 +35,5 @@ public class Caller {
         Command command = comandos.get(cmd);
         command.exec(user, pedido);
     }
+
 }

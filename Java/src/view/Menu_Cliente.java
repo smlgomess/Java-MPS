@@ -27,10 +27,10 @@ public class Menu_Cliente {
         public int op;
 
         public PedidoData data = new PedidoData(); 
-        public User usuario, find_user;       
-        public Pedido pedido = new Pedido();
+        public User usuario, find_user;
         public ArrayList<User> userList;
         public List<Pedido> lista_pedidos;
+        public Pedido pedido = new Pedido();
         public MenuController menuControl = new UserControl();
         public Menu_Pedido_Controller pedidoController;      
         public PersistenceFacade persistenceFacade = PersistenceFacade.obterInstance();
@@ -65,7 +65,8 @@ public class Menu_Cliente {
                                                         + "\nDigite 5 para realizar um pedido"
                                                         + "\nDigite 6 para listar os pedidos de um usuário"
                                                         + "\nDigite 7 para alterar o endereço do pedido"
-                                                        + "\nDigite 8 para sair", "Digite sua opção");
+                                                        + "\nDigite 8 para desfazer o último pedido"
+                                                        + "\nDigite 9 para sair", "Digite sua opção");
             if(option == null){
                 System.exit(0);
             }
@@ -149,6 +150,7 @@ public class Menu_Cliente {
                             setID(getID()+1);
                             pedido.setPedido(getID(), "Em aberto", end_saida, end_chegada);                    
                             call.service(Commands.REGISTRAR, find_user, pedido);
+                            pedido.saveEstado();
                             System.out.println("O pedido foi feito com sucesso!");                    
                         }catch(BuscaException | LoginException | PassException | InfraException e) {
                             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -185,14 +187,30 @@ public class Menu_Cliente {
                             setID(getID() + 1);
                             pedido.setPedido(getID(), "Em aberto",newEndSaida, newEndChegada);                   
                             call.service(Commands.ALTERAR, find_user, pedido);
+                            pedido.saveEstado();
                             System.out.println("Pedido alterado com sucesso!");  
                         } catch(BuscaException | InfraException | PassException | LoginException e) {
                             JOptionPane.showMessageDialog(null, e.getMessage());
                         }
                         menu();
                         break;
-
+                    
                     case 8:
+                        login = JOptionPane.showInputDialog("Digite seu login:");                  
+                        if(login == null){
+                            menu();
+                        }  
+                                        
+                        try{                                          
+                            call.service(Commands.DESFAZER_ALTERAR, find_user, pedido);
+                            System.out.println("Pedido foi desfeito com sucesso!");  
+                        } catch(BuscaException | InfraException | PassException | LoginException e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                        }
+                        menu();
+                        break;
+
+                    case 9:
                         System.exit(0);    
                     default:
                         JOptionPane.showMessageDialog(null, "Comando inválido.");
