@@ -10,7 +10,7 @@ import business.control.Menu_Motorista_Controller;
 import business.control.MotoristaControl;
 import business.model.Motorista;
 import infra.InfraException;
-import infra.MotoristaPersistenceFacade;
+import infra.PersistenceFacade;
 
 public class Menu_Motorista {
                   
@@ -19,7 +19,7 @@ public class Menu_Motorista {
         public Motorista usuario, find_user;  
         public ArrayList<Motorista> userList;        
         public Menu_Motorista_Controller menuControl;     
-        public MotoristaPersistenceFacade persistenceFacade = MotoristaPersistenceFacade.obterInstance();
+        public PersistenceFacade persistenceFacade = PersistenceFacade.obterInstance();
 
                
         public void menu() throws InfraException {
@@ -76,7 +76,7 @@ public class Menu_Motorista {
                         }
 
                         try{
-                            persistenceFacade.del(login);
+                            persistenceFacade.delMot(login);
                             JOptionPane.showMessageDialog(null, "O Motorista foi removido com sucesso.");
                         } catch (InfraException | BuscaException | LoginException e){
                             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -99,7 +99,7 @@ public class Menu_Motorista {
                         break;
                     case 4:
                         try{
-                            userList = persistenceFacade.listarAll();
+                            userList = persistenceFacade.listarAll_Motoristas();
                             JOptionPane.showMessageDialog(null, userList);
                         } catch(BuscaException e){
                             JOptionPane.showMessageDialog(null, e.getMessage());

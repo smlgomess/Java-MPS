@@ -9,7 +9,6 @@ import business.model.Pedido;
 import business.model.User;
 import infra.InfraException;
 import infra.PersistenceFacade;
-import memento.MementoState;
 
 public class PedidoAlterarCommand implements Command {
 

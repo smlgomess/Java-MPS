@@ -1,7 +1,6 @@
 package command;
 
 import infra.PersistenceFacade;
-import memento.MementoState;
 import infra.InfraException;
 
 import java.util.List;

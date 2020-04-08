@@ -146,7 +146,15 @@ public class Menu_Cliente {
                         try{                        
                             find_user = menuControl.list(login);                    
                             end_saida = JOptionPane.showInputDialog("Digite o endereço de saida do produto:"); 
+                            if(end_saida == null){
+                                menu();
+                            } 
+
                             end_chegada = JOptionPane.showInputDialog("Digite o endereço para qual o produto será enviado:"); 
+                            if(end_chegada == null){
+                                menu();
+                            } 
+
                             setID(getID()+1);
                             pedido.setPedido(getID(), "Em aberto", end_saida, end_chegada);                    
                             call.service(Commands.REGISTRAR, find_user, pedido);
@@ -183,7 +191,15 @@ public class Menu_Cliente {
                         try{                        
                             find_user = menuControl.list(login);      
                             newEndSaida = JOptionPane.showInputDialog("Digite o novo endereço de saida do produto:"); 
+                            if(end_saida == null){
+                                menu();
+                            } 
+
                             newEndChegada = JOptionPane.showInputDialog("Digite o novo endereço para qual o produto será enviado:"); 
+                            if(end_chegada == null){
+                                menu();
+                            } 
+
                             setID(getID() + 1);
                             pedido.setPedido(getID(), "Em aberto",newEndSaida, newEndChegada);                   
                             call.service(Commands.ALTERAR, find_user, pedido);

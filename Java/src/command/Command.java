@@ -8,7 +8,6 @@ import business.control.exception.PassException;
 import business.model.Pedido;
 import business.model.User;
 import infra.InfraException;
-import memento.MementoState;
 
 public interface Command {
 
