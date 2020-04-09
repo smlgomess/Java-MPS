@@ -23,7 +23,7 @@ public class Pedido implements Serializable, MementoState<Pedido> {
         this.setState(state);
         this.setEdpartida(endpartida);
         this.setEdchegada(endchegada);
-        
+        caretaker = new CareTaker();
     }
 
     public void setPedido(int id, String state, String endpartida, String endchegada){
@@ -31,7 +31,7 @@ public class Pedido implements Serializable, MementoState<Pedido> {
         this.setState(state);
         this.setEdpartida(endpartida);
         this.setEdchegada(endchegada);
-        caretaker = new CareTaker();
+        
     }
        
     public void setEdpartida(String endereco_partida) { //endereço de partida

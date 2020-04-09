@@ -33,6 +33,8 @@ public class PedidoDesfazerAlterarCommand implements Command {
         Object estado = ((MementoState) pedido.getLastPedido());
         if(estado != null) {
             facade.removePedido(user, pedido);
+        } else {
+            System.out.println("Primeira execução!");
         }
     }
 }

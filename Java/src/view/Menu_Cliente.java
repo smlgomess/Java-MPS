@@ -156,7 +156,7 @@ public class Menu_Cliente {
                             } 
 
                             setID(getID()+1);
-                            pedido.setPedido(getID(), "Em aberto", end_saida, end_chegada);                    
+                            pedido = new Pedido(getID(), "Em aberto", end_saida, end_chegada);                    
                             call.service(Commands.REGISTRAR, find_user, pedido);
                             pedido.saveEstado();
                             System.out.println("O pedido foi feito com sucesso!");                    

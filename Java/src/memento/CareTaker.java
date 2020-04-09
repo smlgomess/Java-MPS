@@ -9,7 +9,7 @@ public class CareTaker implements Serializable {
     private static final long serialVersionUID = 1L;
     private final List<Memento> mementoList = new ArrayList<>();
 
-    public void add(Memento state) {
+    public void add(final Memento state) {
         mementoList.add(state);
     }
 
