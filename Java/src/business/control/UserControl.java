@@ -11,20 +11,24 @@ import business.control.exception.LoginException;
 import business.control.exception.PassException;
 
 public class UserControl implements MenuController {
-    private HashMap<String, User> login;
-    DataPersistent arq = new UserData();
+    private HashMap<String, User> login = new HashMap<>();
+    DataPersistent arq;
     
     public UserControl(){
-        arq = new UserData();
-        login = new HashMap<>();
-        
+        loadData();        
+    }
+    
+    public void loadData(){  
+        login = new HashMap<>();  
+        arq = new UserData();          
         try{
             login = (HashMap<String, User>) arq.carregarDados();
         } catch (InfraException e){
             System.out.println(e.getMessage());
         }
+
     }
-    
+
     public void add(User user) throws LoginException, PassException, InfraException {
         
         validarLogin(user.getLogin());
@@ -32,17 +36,25 @@ public class UserControl implements MenuController {
 
         login.put(user.getLogin(), user);        
         arq.salvarDados(login);    
+        loadData();
     }
+
+    public void add_Email(User user) throws LoginException, PassException, InfraException {
+        login.put(user.getLogin(), user);        
+        arq.salvarDados(login);    
+        loadData();
+    }
+
     
     public void del(String login) throws LoginException, BuscaException, InfraException{
         User user;
-        validarLogin(login);
-
+    
         user = this.login.remove(login);
         
         validarBusca(user);
 
         arq.salvarDados(this.login);    
+        loadData();
     }
     
     public ArrayList<User> listAll() throws BuscaException{
@@ -56,8 +68,6 @@ public class UserControl implements MenuController {
     
     public User list(String login) throws BuscaException, LoginException{
         
-        validarLogin(login);
-
         User user = this.login.get(login);
         validarBusca(user);        
         return user;
@@ -70,7 +80,7 @@ public class UserControl implements MenuController {
         } else if (login.matches(".*[0-9].*")) {
             throw new LoginException("O login não pode conter números.");
         } else if (login.length() == 0){
-            throw new LoginException("O login não pode ser vázio.");
+            throw new LoginException("O login não pode ser vazio.");
         }
     }
 

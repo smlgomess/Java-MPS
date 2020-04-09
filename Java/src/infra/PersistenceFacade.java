@@ -17,13 +17,15 @@ import infra.factory.infra_business_Factory;
 
 public class PersistenceFacade{
 
-    MenuController menuControl;
+    MenuController menuControl, UserAdapterControl;
     Menu_Pedido_Controller pedidoControl;    
-    Menu_Motorista_Controller motoristaControl;
+    Menu_Motorista_Controller motoristaControl, motoristaAdapterControl ;
+    infra_business_Factory userFactory;
 
     private PersistenceFacade(){
-        infra_business_Factory userFactory = new infra_business_Factory();
+        userFactory = new infra_business_Factory();
         menuControl = userFactory.getUserControl();
+        UserAdapterControl = userFactory.getUserControl_Adapter();
         pedidoControl = userFactory.getPedidoControl();   
         motoristaControl = userFactory.getMotoristaControl();     
     }
@@ -36,12 +38,21 @@ public class PersistenceFacade{
 
     //Cliente (User)
 
-    public void cadastrar(User user) throws LoginException, PassException, InfraException{
-        addUser(user);
+    public void cadastrar(User user, int i) throws LoginException, PassException, InfraException{
+        if (i == 1){
+            addUser(user);
+        }
+        else if (i == 2){
+            addUserAdapter(user);
+        }
     }
 
     private void addUser(User user) throws LoginException, PassException, InfraException {
         menuControl.add(user);
+    }
+
+    private void addUserAdapter(User user) throws LoginException, PassException, InfraException {
+        UserAdapterControl.add(user);
     }
 
     public ArrayList<User> listarAll() throws BuscaException{
@@ -49,6 +60,8 @@ public class PersistenceFacade{
     }
 
     private ArrayList<User> listAll() throws BuscaException{
+        menuControl = userFactory.getUserControl();
+       // UserAdapterControl = userFactory.getUserControl_Adapter();
         return menuControl.listAll();
     }
 
@@ -57,6 +70,7 @@ public class PersistenceFacade{
     }
     
     private void delUser(String login) throws LoginException, BuscaException, InfraException{
+        menuControl = userFactory.getUserControl();
         menuControl.del(login);
     }
 
