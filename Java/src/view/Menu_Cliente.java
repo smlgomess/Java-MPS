@@ -15,6 +15,7 @@ import business.model.Pedido;
 import business.model.User;
 import infra.InfraException;
 import infra.PersistenceFacade;
+import interpreter.EnderecoInterpreter;
 import infra.PedidoData;
 import command.Caller;
 import command.Commands;
@@ -35,6 +36,7 @@ public class Menu_Cliente {
         public Menu_Pedido_Controller pedidoController;      
         public PersistenceFacade persistenceFacade = PersistenceFacade.obterInstance();
         public Caller call = new Caller(persistenceFacade);
+        public EnderecoInterpreter interpreter = new EnderecoInterpreter();
 
         
         public int getID(){
@@ -156,7 +158,8 @@ public class Menu_Cliente {
                             } 
 
                             setID(getID()+1);
-                            pedido = new Pedido(getID(), "Em aberto", end_saida, end_chegada);                    
+                            pedido = new Pedido(getID(), "Em aberto", end_saida, end_chegada);
+                            interpreter.interpretar(pedido);
                             call.service(Commands.REGISTRAR, find_user, pedido);
                             pedido.saveEstado();
                             System.out.println("O pedido foi feito com sucesso!");                    

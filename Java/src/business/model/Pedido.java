@@ -6,6 +6,8 @@ import memento.PedidoMemento;
 
 import java.io.Serializable;
 
+import infra.InfraException;
+
 
 public class Pedido implements Serializable, MementoState<Pedido> {
     
@@ -71,7 +73,10 @@ public class Pedido implements Serializable, MementoState<Pedido> {
         caretaker.add( new PedidoMemento(this) );
     }
 
-    public Pedido getLastPedido() {
+    public Pedido getLastPedido() throws InfraException {
+        if(caretaker == null){
+            throw new InfraException("Nenhum pedido encontrado para o usuário nesta sessão.");
+        }
         return (Pedido) caretaker.getLast().getState();
     }
 

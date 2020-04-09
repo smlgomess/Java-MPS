@@ -44,5 +44,3 @@ nbdist/
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
-
-# End of https://www.gitignore.io/api/java,netbeans,visualstudiocode
