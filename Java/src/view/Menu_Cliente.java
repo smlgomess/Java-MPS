@@ -264,7 +264,8 @@ public class Menu_Cliente {
                             } 
 
                             setID(getID() + 1);
-                            pedido.setPedido(getID(), "Em aberto",newEndSaida, newEndChegada);                   
+                            pedido = new Pedido(getID(), "Em aberto",newEndSaida, newEndChegada);                   
+                            interpreter.interpretar(pedido);
                             call.service(Commands.ALTERAR, find_user, pedido);
                             pedido.saveEstado();
                             System.out.println("Pedido alterado com sucesso!");  

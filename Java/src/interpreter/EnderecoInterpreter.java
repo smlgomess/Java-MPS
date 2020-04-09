@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import business.model.Pedido;
+import infra.InfraException;
 
 public class EnderecoInterpreter implements Interpretador {
     StringBuilder stringChegadaBuilder, stringSaidaBuilder;
@@ -12,7 +13,7 @@ public class EnderecoInterpreter implements Interpretador {
     public EnderecoInterpreter() {}    
 
     @Override
-    public void interpretar(Pedido pedido) {
+    public void interpretar(Pedido pedido) throws InfraException {
         stringChegadaBuilder = new StringBuilder(pedido.getEdchegada());
         stringSaidaBuilder = new StringBuilder(pedido.getEdpartida());
 
@@ -34,6 +35,9 @@ public class EnderecoInterpreter implements Interpretador {
             if (m.find()) {
                 indice = m.start();
             }
+            if(indice < 0) {
+                throw new InfraException("Não foi possível interpretar o endereço. Tente novamente.");
+            }
             pedido.setEdchegada(adicionaVirgRua(pedido, stringChegadaBuilder, indice));
         }
 
@@ -43,6 +47,9 @@ public class EnderecoInterpreter implements Interpretador {
 
             if (m.find()) {
                 indice = m.start();
+            }
+            if(indice < 0) {
+                throw new InfraException("Não foi possível interpretar o endereço. Tente novamente.");
             }
             pedido.setEdpartida(adicionaVirgRua(pedido, stringSaidaBuilder, indice));
         }

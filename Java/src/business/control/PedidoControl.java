@@ -46,7 +46,7 @@ public class PedidoControl  implements Menu_Pedido_Controller {
     }
     
     private void validarBusca(List<Pedido> pedido) throws BuscaException{
-        if(pedido == null){
+        if(pedido == null || pedido.size() == 0){
             throw new BuscaException("Nenhum pedido encontrado para o usuário.");
         }
     }
