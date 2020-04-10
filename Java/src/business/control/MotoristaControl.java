@@ -12,18 +12,23 @@ import business.control.exception.LoginException;
 import business.control.exception.PassException;
 
 public class MotoristaControl implements Menu_Motorista_Controller {
-    private HashMap<String, Motorista> login;
-    Data_Motorista_Persistent arq = new MotoristaData();
+    private HashMap<String, Motorista> login = new HashMap<>();
+    Data_Motorista_Persistent arq;
     
     public MotoristaControl(){
-        arq = new MotoristaData();
-        login = new HashMap<>();
-        
+        loadData();          
+    }
+
+   
+    public void loadData(){  
+        login = new HashMap<>();  
+        arq = new MotoristaData();          
         try{
             login = (HashMap<String, Motorista>) arq.carregarDados();
         } catch (InfraException e){
             System.out.println(e.getMessage());
         }
+
     }
     
     public void add(Motorista user) throws LoginException, PassException, InfraException, CNHException {
@@ -33,18 +38,25 @@ public class MotoristaControl implements Menu_Motorista_Controller {
         validarCNH(user.getCnh());
 
         login.put(user.getLogin(), user);        
+        arq.salvarDados(login);   
+        loadData();
+    }
+
+    public void add_Email(Motorista user) throws LoginException, PassException, InfraException, CNHException {
+        login.put(user.getLogin(), user);        
         arq.salvarDados(login);    
+        loadData();
     }
     
     public void del(String login) throws LoginException, BuscaException, InfraException{
-        Motorista user;
-        validarLogin(login);
+        Motorista user;       
 
         user = this.login.remove(login);
         
         validarBusca(user);
 
         arq.salvarDados(this.login);    
+        loadData();
     }
     
     public ArrayList<Motorista> listAll() throws BuscaException{
@@ -57,9 +69,6 @@ public class MotoristaControl implements Menu_Motorista_Controller {
     }
     
     public Motorista list(String login) throws BuscaException, LoginException{
-        
-        validarLogin(login);
-
         Motorista user = this.login.get(login);
         validarBusca(user);        
         return user;

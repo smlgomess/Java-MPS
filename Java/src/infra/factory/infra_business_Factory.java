@@ -2,6 +2,7 @@ package infra.factory;
 
 import business.control.MenuController;
 import business.control.Menu_Pedido_Controller;
+import business.control.MotoristaAdapter;
 import business.control.Menu_Motorista_Controller;
 import business.control.UserControl;
 import business.control.UserAdapter;
@@ -24,5 +25,9 @@ public class infra_business_Factory {
 
     public Menu_Motorista_Controller getMotoristaControl(){
         return new MotoristaControl();
+    }
+
+    public Menu_Motorista_Controller getMotoristaControl_Adapter(){
+        return new MotoristaAdapter();
     }
 }

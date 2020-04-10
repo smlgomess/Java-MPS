@@ -19,7 +19,7 @@ public class PersistenceFacade{
 
     MenuController menuControl, UserAdapterControl;
     Menu_Pedido_Controller pedidoControl;    
-    Menu_Motorista_Controller motoristaControl, motoristaAdapterControl ;
+    Menu_Motorista_Controller motoristaControl, motoristaAdapterControl;
     infra_business_Factory userFactory;
 
     private PersistenceFacade(){
@@ -28,6 +28,7 @@ public class PersistenceFacade{
         UserAdapterControl = userFactory.getUserControl_Adapter();
         pedidoControl = userFactory.getPedidoControl();   
         motoristaControl = userFactory.getMotoristaControl();     
+        motoristaAdapterControl = userFactory.getMotoristaControl_Adapter();
     }
 
     private static PersistenceFacade instance = new PersistenceFacade();
@@ -60,8 +61,7 @@ public class PersistenceFacade{
     }
 
     private ArrayList<User> listAll() throws BuscaException{
-        menuControl = userFactory.getUserControl();
-       // UserAdapterControl = userFactory.getUserControl_Adapter();
+        menuControl = userFactory.getUserControl();       
         return menuControl.listAll();
     }
 
@@ -79,12 +79,21 @@ public class PersistenceFacade{
 
     //Motorista
     
-    public void cadastrar(Motorista user) throws LoginException, PassException, InfraException, CNHException{
-        addUser(user);
+    public void cadastrar(Motorista user, int i) throws LoginException, PassException, InfraException, CNHException{
+        if (i == 1){
+            addMotorista(user);
+        }
+        else if (i == 2){
+            addMotoristaAdapter(user);
+        }
     }   
 
-    private void addUser(Motorista user) throws LoginException, PassException, InfraException , CNHException{
+    private void addMotorista(Motorista user) throws LoginException, PassException, InfraException , CNHException{
         motoristaControl.add(user);
+    }
+
+    private void addMotoristaAdapter(Motorista user) throws LoginException, PassException, InfraException , CNHException{
+        motoristaAdapterControl.add(user);
     }
 
     public ArrayList<Motorista> listarAll_Motoristas() throws BuscaException{
@@ -92,6 +101,7 @@ public class PersistenceFacade{
     }
 
     private ArrayList<Motorista> listAll_Motoristas() throws BuscaException{
+        motoristaControl = userFactory.getMotoristaControl();
         return motoristaControl.listAll();
     }
 
@@ -100,6 +110,7 @@ public class PersistenceFacade{
     }
 
     private void delMotorista(String login) throws LoginException, BuscaException, InfraException{
+        motoristaControl = userFactory.getMotoristaControl();
         motoristaControl.del(login);
     }
 

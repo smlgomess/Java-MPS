@@ -158,8 +158,7 @@ public class Menu_Cliente {
                         sub_menu_usuario();                        
                         menu();
                         break;
-                    case 2:
-                        //persistenceFacade = PersistenceFacade.obterInstance();                                              
+                    case 2:                                                                     
                         login = JOptionPane.showInputDialog("Digite o login para deletar:");                  
                         if(login == null){
                             menu();
@@ -187,8 +186,7 @@ public class Menu_Cliente {
                         }
                         menu();
                         break;
-                    case 4:
-                        //persistenceFacade = PersistenceFacade.obterInstance();                                              
+                    case 4:                                                                     
                         try{
                             userList = persistenceFacade.listarAll();
                             JOptionPane.showMessageDialog(null, userList);
